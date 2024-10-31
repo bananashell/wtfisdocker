@@ -16,3 +16,19 @@ services:
       dockerfile: Dockerfile
     ports:
       - "5001:8080"
+
+  superhero-service:
+    build:
+      context: ./superhero-service
+      dockerfile: Dockerfile
+    ports:
+      - "5002:3000"
+    environment:
+      - SUPERHERO_DB_URL=jdbc:postgresql://superhero-db:5432/superhero
+
+  superhero-db:
+    image: postgres:17
+    environment:
+      DATABASE_URL: jdbc:postgresql://superhero-db:5432/superhero
+    ports:
+      - "5432:5432"
