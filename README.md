@@ -1,7 +1,26 @@
-# WTF is Docker?
-
 ![Docker](/docs/images/docker.png)
 
+# WTF is Docker?
+
+> _Docker helps developers build, share, run, and verify applications anywhere — without tedious environment configuration or management._
+
+[www.docker.com](https://www.docker.com)
+
+## Demo
+
+-   Install [docker](https://www.docker.com/)
+-   In your favorite terminal run `docker-compose up`
+    -   This will look at the `docker-compose.yaml` and spin up all containers that has been specified
+        -   Client, a next.js website
+        -   Weather-Service, a dotnet api
+        -   Superhero-Service, a elysia api
+        -   Superhero-DB, a postgres database
+    -   Goto http://localhost:3000 to get new weather info on each request
+    -   Goto http://localhost:3001/swagger to list and create superheroes
+
+## Container evolution
+
+![Container evolution](/docs/images/container_evolution.png)
 First someone wanted to share something that they’ve built.The only way was to take someones computer and expose it to the internet
 
 When you got a lot of traffic or needed a beefier computer you had to take everything that you had installed and all the configuration and move that to someone elses computer and setup everything again
@@ -33,7 +52,7 @@ codeC --- reqs --> dockerImage
 dockerImage --> registryC
 ```
 
-### Before containers
+### Without containers
 
 Historically you would take your code, run it through a build pipeline, package it in the way your registry expects it and push it to a registry. In most cases this can contain executables or just code that some other application can use.
 
@@ -45,3 +64,29 @@ Correct runtime version, libs, etc.
 Instead of bundeling only your code you create a _manifest_, `Dockerfile`, that contains not only your requirements, OS, libs, runtimes etc, but also your code and _HOW_ to build your code. There's a plethora of prebuilt containers that you can start from. You can find public ones on [Docker Hub](https://hub.docker.com/)
 
 Finally in your Dockerfile you tell Docker what command to run when the container is started.
+
+## Resources
+
+![Comparison](/docs/images/vmvsdocker.png)
+
+### Overhead
+
+-   VMs require a full OS for each instance which leads to higher memory and CPU usage
+-   Docker containers share the host OS kernel making them faster and lighter, with less hardware consumption and thus more performant since there is no HyperVisor layer. Thus leading to being capable of running multitudes of applications on equivalent hardware
+
+### Isolation
+
+-   VMs are strictly isolated due to it's nature of being a separate (Guest) OS from the host OS
+-   Docker containers use process-level isolation which is less isolated but way more efficient than VMs
+
+### Scalability
+
+-   VMs are slow and clunky to spin up and down and require more resources to scale due to the guest OS.
+-   Since Docker containers are so tiny and efficient spinning up or down containers can be done quickly based on load for example
+
+# Competition
+
+Even though docker is the most prominent container solution there are others.
+
+-   [Podman](https://podman.io)
+-   [OpenShift](https://www.redhat.com/en/technologies/cloud-computing/openshift)
