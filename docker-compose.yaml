@@ -21,14 +21,24 @@ services:
     build:
       context: ./superhero-service
       dockerfile: Dockerfile
+    depends_on:
+      superhero-db:
+        condition: service_healthy
+        restart: true
     ports:
-      - "5002:3000"
+      - "3001:3000"
     environment:
-      - SUPERHERO_DB_URL=jdbc:postgresql://superhero-db:5432/superhero
+      - DATABASE_URL=postgresql://postgres:mysecretpassword@superhero-db:5432/
 
   superhero-db:
     image: postgres:17
+    # ports:
+    #   - "5432:5432"
     environment:
-      DATABASE_URL: jdbc:postgresql://superhero-db:5432/superhero
-    ports:
-      - "5432:5432"
+      - POSTGRES_PASSWORD=mysecretpassword
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s

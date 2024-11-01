@@ -1,12 +1,14 @@
-import { drizzle } from "drizzle-orm/node-postgres";
 import { superHeroesTable } from "./src/db/schema";
 import { Elysia, t, error } from "elysia";
 import { swagger } from "@elysiajs/swagger";
+import { db } from "./src/db";
 
-const db = drizzle(process.env.DATABASE_URL!);
-const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3001;
+const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
 const app = new Elysia()
+    .onRequest(({ request }) => {
+        console.log(`Request received: ${request.method} ${request.url}`);
+    })
     .use(
         swagger({
             documentation: {
