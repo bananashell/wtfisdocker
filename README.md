@@ -21,6 +21,7 @@
 ## Container evolution
 
 ![Container evolution](/docs/images/container_evolution.png)
+
 First someone wanted to share something that they’ve built.The only way was to take someones computer and expose it to the internet
 
 When you got a lot of traffic or needed a beefier computer you had to take everything that you had installed and all the configuration and move that to someone elses computer and setup everything again
